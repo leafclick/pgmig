@@ -1,0 +1,2 @@
+CREATE SCHEMA public;
+CREATE TABLE IF NOT EXISTS init(id bigint);
