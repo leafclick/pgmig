@@ -60,6 +60,24 @@ For now the expected output is something like this
 
 You can safelly ignore warnings about unsupported features as they are not used by PGMig.
 
+## Linux binary running locally
+
+If you have already [GraalVM](https://github.com/oracle/graal/releases) installed and properly set `GRAAL_HOME`, `JAVA_HOME` and `PATH` you can try to build and run the native image locally.
+
+From the project directory create the uberjar and run the `create-image.sh` helper script.
+
+    lein with-profile native do clean, test, uberjar
+    ./create-image.sh target/uberjar/pgmig.jar
+
+You can use both direct `pgmig` options or environment variables when running it (env variables have the priority).
+
+    ./pgmig -h localhost -p 5432 -d pgmig -u pgmig -P pgmig -r samples/db/migrations pending
+
+Note that you need the same `.so` libraries that the native binary is linked to
+on a target machine. Also keep in mind that you might need to add
+`-Djava.library.path=<path-to-shared-libs>` as a `pgmig` option if it needs to load some
+libraries dynamically (including shared libraries from the JDK itself).
+
 # Limitations
 
 There is a number of Graal's [SubstrateVM LIMITATTIONS](https://github.com/oracle/graal/blob/master/substratevm/LIMITATIONS.md)
