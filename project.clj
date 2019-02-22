@@ -19,7 +19,7 @@
                  [mount "0.1.14"]
                  [cprop "0.1.13"]
                  [hikari-cp "1.8.3" :exclusions [com.zaxxer/HikariCP org.slf4j/slf4j-api]]
-                 [com.github.leafclick/HikariCP "HikariCP-3.3.2-graal-RC2"]
+                 [com.leafclick/hikariCP "HikariCP-3.3.2-graal-RC3"]
                  [org.postgresql/postgresql "42.2.5"]
                  [migratus "1.2.2" :exclusions [org.clojure/clojure]]
                  [com.taoensso/tower "3.1.0-beta4"]

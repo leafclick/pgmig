@@ -43,20 +43,17 @@ To run the native image within the docker container set the environment, bind th
                
 For now the expected output is something like this
 
-    19-02-16 16:11:08 f1d1605733ee INFO [com.zaxxer.hikari.HikariDataSource:87] - HikariPool-1 - Starting...
-    19-02-16 16:11:08 f1d1605733ee WARN [com.zaxxer.hikari.pool.HikariPool:282] - setMetricRegistry is not supported in native-image - use setMetricsTrackerFactory directly
-    19-02-16 16:11:08 f1d1605733ee WARN [com.zaxxer.hikari.pool.HikariPool:309] - setHealthCheckRegistry is not supported in native-image - use CodahaleHealthChecker.registerHealthChecks directly
-    19-02-16 16:11:08 f1d1605733ee INFO [com.zaxxer.hikari.HikariDataSource:89] - HikariPool-1 - Start completed.
-    19-02-16 16:11:08 f1d1605733ee INFO [pgmig.db.store:40] - Using jdbc-uri jdbc:postgresql://172.17.0.2:5432/pgmig?user=pgmig&password=pgmig
-    19-02-16 16:11:08 f1d1605733ee INFO [pgmig.main:106] - #'pgmig.config/env started
-    19-02-16 16:11:08 f1d1605733ee INFO [pgmig.main:106] - #'pgmig.db.store/db-spec started
-    19-02-16 16:11:08 f1d1605733ee INFO [pgmig.migration:11] - Using migration dir 'migrations'
-    19-02-16 16:11:08 f1d1605733ee INFO [pgmig.migration:27] - You have 2 PENDING migration(s):
+    19-02-22 17:49:17 oryx INFO [com.zaxxer.hikari.HikariDataSource:80] - HikariPool-1 - Starting...
+    19-02-22 17:49:17 oryx INFO [com.zaxxer.hikari.HikariDataSource:82] - HikariPool-1 - Start completed.
+    19-02-22 17:49:17 oryx INFO [pgmig.main:106] - #'pgmig.config/env started
+    19-02-22 17:49:17 oryx INFO [pgmig.main:106] - #'pgmig.db.store/db-spec started
+    19-02-22 17:49:17 oryx INFO [pgmig.migration:11] - Using migration dir 'samples/db/migrations'
+    19-02-22 17:49:17 oryx INFO [pgmig.migration:27] - You have 2 PENDING migration(s):
     [20180830154000 "first"]
     [20190216143455 "second"]
-    19-02-16 16:11:08 f1d1605733ee INFO [com.zaxxer.hikari.HikariDataSource:357] - HikariPool-1 - Shutdown initiated...
-    19-02-16 16:11:08 f1d1605733ee INFO [com.zaxxer.hikari.HikariDataSource:359] - HikariPool-1 - Shutdown completed.
-    19-02-16 16:11:08 f1d1605733ee INFO [pgmig.main:87] - #'pgmig.db.store/db-spec stopped
+    19-02-22 17:49:17 oryx INFO [com.zaxxer.hikari.HikariDataSource:350] - HikariPool-1 - Shutdown initiated...
+    19-02-22 17:49:17 oryx INFO [com.zaxxer.hikari.HikariDataSource:352] - HikariPool-1 - Shutdown completed.
+    19-02-22 17:49:17 oryx INFO [pgmig.main:87] - #'pgmig.db.store/db-spec stopped
 
 You can safelly ignore warnings about unsupported features as they are not used by PGMig.
 
