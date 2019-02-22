@@ -1,51 +1,36 @@
 (ns pgmig.db.store
   (:require [mount.core :refer [args defstate]]
             [hikari-cp.core :as hikari]
-            [clojure.string :as str]
             [taoensso.timbre :as log]
             [clojure.java.jdbc :as jdbc]
-            [pgmig.config :refer [env]])
-  (:import (org.postgresql.ds PGSimpleDataSource)
-           (com.zaxxer.hikari HikariConfig)))
+            [pgmig.config :refer [env]]))
 
-(defn jdbc-adapter [jdbc-uri]
-  (if (str/starts-with? jdbc-uri "jdbc:")
-    (if-let [adapter (second (str/split jdbc-uri #":"))]
-      (keyword adapter)
-      :unknown)
-    :unknown))
+(def default-datasource-options
+  {:minimum-idle       1
+   :maximum-pool-size  1})
 
-(defmulti create-datasource jdbc-adapter)
-(defmethod create-datasource :default [jdbc-uri]
-  (throw (IllegalArgumentException. "Unknown datasource type.")))
+(defn datasource-options [config]
+  (let [{:keys [adapter server-host server-port database-name dbuser dbpass jdbc-url]} config
+        ext-options (select-keys config [:adapter :datasource :datasource-classname :auto-commit :configure
+                                        :connection-test-query :connection-timeout :validation-timeout :idle-timeout
+                                        :max-lifetime :maximum-pool-size :minimum-idle :password :pool-name
+                                        :read-only :username :leak-detection-threshold :register-mbeans :jdbc-url
+                                        :driver-class-name :connection-init-sql :metric-registry :health-check-registry])
+        pool-options (merge default-datasource-options ext-options)]
+    (cond-> pool-options
+            adapter (conj [:adapter adapter])
+            server-host (conj [:server-name server-host])
+            server-port (conj [:port-number server-port])
+            database-name (conj [:database-name database-name])
+            dbuser (conj [:username dbuser])
+            dbpass (conj [:password dbpass])
+            jdbc-url (conj [:jdbc-url jdbc-url]))))
 
-(defmethod create-datasource :postgresql [jdbc-uri]
-  (doto (PGSimpleDataSource.)
-    (.setUrl jdbc-uri)))
-
-(defn to-jdbc-uri [datasource-config]
-  (cond
-    (:jdbc-url datasource-config) (:jdbc-url datasource-config)
-    (:url datasource-config) (:url datasource-config)
-    :else (let [{:keys [adapter server-host server-port database-name dbuser dbpass]} datasource-config
-                port (when server-port (str ":" server-port))
-                password (when dbpass (str "&password=" dbpass))
-                userauth (when dbuser (str "?user=" dbuser password))]
-            (str "jdbc:" adapter "://" server-host port "/" database-name userauth))))
-
-(defstate db-spec :start (let [jdbc-uri (to-jdbc-uri env)
-                               dbpool (hikari/make-datasource {:datasource
-                                                               (create-datasource jdbc-uri)
-                                                               :maximum-pool-size 1})]
-                           (log/info "Using jdbc-uri" jdbc-uri)
-                           {:datasource dbpool})
-  :stop (do
-          (when-let [ds (:datasource db-spec)]
-            (hikari/close-datasource ds))))
-
-(defn is-postgresql? [db-spec]
-  (let [^HikariConfig hikari-config (:datasource db-spec)]
-    (instance? PGSimpleDataSource (.getDataSource hikari-config))))
+(defstate db-spec
+  :start (let [dbpool (hikari/make-datasource (datasource-options env))]
+           {:datasource dbpool})
+  :stop (when-let [ds (:datasource db-spec)]
+          (hikari/close-datasource ds)))
 
 (defn health-check
   "Test the database connection. Return true if valid; falsy value on connection error or timeout"
