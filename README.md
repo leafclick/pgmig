@@ -60,6 +60,7 @@ You can safelly ignore warnings about unsupported features as they are not used 
 ## Linux binary running locally
 
 If you have already [GraalVM](https://github.com/oracle/graal/releases) installed and properly set `GRAAL_HOME`, `JAVA_HOME` and `PATH` you can try to build and run the native image locally.
+You need **Graal 19.3.0** long term release to build and deploy `pgmig` successfully.
 
 From the project directory create the uberjar and run the `create-image.sh` helper script.
 

@@ -3,17 +3,21 @@
 uberjar="$1"
 
 native-image --verbose \
-    --no-server -Djava.library.path=$GRAAL_HOME/jre/lib/amd64/ \
+    --no-server \
+    -Djava.library.path=$GRAAL_HOME/jre/lib/amd64/ \
+    -H:+ReportExceptionStackTraces \
     -H:ReflectionConfigurationFiles=graal.json \
     -H:IncludeResources='.*\.(properties|edn)' \
     -H:IncludeResources='com/ibm/icu/impl/data/icudt58b/.*' \
     -H:IncludeResources='com/ibm/icu/impl/duration/impl/data/icudt58b/.*' \
     -H:IncludeResources='com/ibm/icu/.*\.properties' \
     -H:IncludeResources='com/github/fge/.*\.properties' \
-    --report-unsupported-elements-at-runtime \
+    --no-fallback \
     --allow-incomplete-classpath \
-    --delay-class-initialization-to-runtime=org.postgresql.sspi.NTDSAPI \
-    --delay-class-initialization-to-runtime=com.sun.jna.platform.win32.Secur32 \
-    --delay-class-initialization-to-runtime=com.sun.jna.platform.win32.Kernel32 \
+    --report-unsupported-elements-at-runtime \
+    --enable-url-protocols=http \
+    --initialize-at-build-time \
+    --initialize-at-run-time=org.postgresql.sspi.NTDSAPI \
+    --initialize-at-run-time=com.sun.jna.platform.win32.Secur32 \
+    --initialize-at-run-time=com.sun.jna.platform.win32.Kernel32 \
     -jar "$uberjar"
-

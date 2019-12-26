@@ -26,5 +26,11 @@
     "allPublicConstructors" : true,
     "allDeclaredMethods" : true,
     "allPublicMethods" : true
+  },
+  {
+     "name": "java.util.concurrent.CopyOnWriteArrayList",
+     "fields" : [
+       { "name" : "lock", "allowWrite" : true }
+     ]
   }
 ]
