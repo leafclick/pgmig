@@ -1,4 +1,4 @@
-(defproject com.leafclick/pgmig "0.2.0"
+(defproject com.leafclick/pgmig "0.2.1-SNAPSHOT"
 
   :description "Standalone PostgreSQL Migration Runner"
   :url "https://github.com/leafclick/pgmig"
