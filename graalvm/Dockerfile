@@ -1,7 +1,7 @@
 FROM debian:10-slim
 
-ENV GRAALVM_PKG=graalvm-ce-java11-linux-amd64-19.3.0.tar.gz \
-    GRAAL_HOME=/opt/graalvm-ce-java11-19.3.0 \
+ENV GRAALVM_PKG=graalvm-ce-java11-linux-amd64-19.3.0.2.tar.gz \
+    GRAAL_HOME=/opt/graalvm-ce-java11-19.3.0.2 \
     JAVA_HOME=$GRAAL_HOME/jre \
     PATH=$GRAAL_HOME/bin:$PATH
 
