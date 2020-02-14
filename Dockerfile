@@ -1,4 +1,4 @@
-FROM graalvm-ce:19.3.0 as BASE
+FROM graalvm-ce:19.3.1 as BASE
 
 RUN mkdir /target
 WORKDIR /target
