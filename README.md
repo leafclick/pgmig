@@ -87,7 +87,7 @@ Because of this the only supported(*) JDBC driver is PostgreSQL JDBC DataSource 
                
 ## License
 
-Copyright © 2019 leafclick s.r.o.
+Copyright © 2019-2020 leafclick s.r.o.
 
 Licensed under the Apache License, Version 2.0.
 
