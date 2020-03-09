@@ -6,19 +6,19 @@
             :url          "http://www.apache.org/licenses/LICENSE-2.0.html"
             :distribution :repo}
 
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [[org.clojure/clojure "1.10.2-alpha1"]
                  [com.taoensso/timbre "4.10.0"]
                  [hikari-cp "1.8.3" :exclusions [com.zaxxer/HikariCP org.slf4j/slf4j-api]]
                  [mount "0.1.16"]
-                 [cprop "0.1.15"]
+                 [cprop "0.1.16"]
                  [com.fzakaria/slf4j-timbre "0.3.19" :exclusions [org.clojure/clojure]]
                  [org.slf4j/slf4j-api "1.7.30"]
                  [org.slf4j/log4j-over-slf4j "1.7.30"]
                  [org.slf4j/jul-to-slf4j "1.7.30"]
                  [org.slf4j/jcl-over-slf4j "1.7.30"]
-                 [org.clojure/tools.logging "0.6.0"]
+                 [org.clojure/tools.logging "1.0.0"]
                  [org.clojure/java.jdbc "0.7.11"]
-                 [org.clojure/tools.cli "0.4.2"]
+                 [org.clojure/tools.cli "1.0.194"]
                  [com.leafclick/hikariCP "HikariCP-3.3.2-graal-RC4"]
                  [org.postgresql/postgresql "42.2.10"]
                  [migratus "1.2.7" :exclusions [org.clojure/clojure]]
@@ -56,7 +56,7 @@
    :project/docker  {:source-paths   ["env/docker/clj"]
                      :resource-paths ["env/docker/resources"]}
    :project/dev     {:dependencies   [[prone "2020-01-17"]
-                                      [org.clojure/test.check "0.10.0"]
+                                      [org.clojure/test.check "1.0.0"]
                                       [circleci/circleci.test "0.4.3"]]
                      :source-paths   ["env/dev/clj"]
                      :test-paths     ["test/clj"]
