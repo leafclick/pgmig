@@ -1,4 +1,9 @@
-FROM graalvm-ce:19.3.1 as BASE
+FROM oracle/graalvm-ce:20.1.0-java11 as BASE
+
+ENV GRAAL_HOME=/opt/graalvm-ce-java11-20.1.0/
+
+RUN gu install native-image
+RUN update-alternatives --install /usr/bin/native-image native-image $GRAAL_HOME/bin/native-image 1
 
 RUN mkdir /target
 WORKDIR /target
@@ -15,23 +20,25 @@ COPY --from=BASE /target/pgmig /pgmig
 COPY resources resources
 
 COPY --from=BASE /lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
-COPY --from=BASE /lib/x86_64-linux-gnu/libtinfo.so.6 /lib/x86_64-linux-gnu/libtinfo.so.6
-COPY --from=BASE /lib/x86_64-linux-gnu/libdl.so.2 /lib/x86_64-linux-gnu/libdl.so.2
-COPY --from=BASE /lib/x86_64-linux-gnu/libc.so.6 /lib/x86_64-linux-gnu/libc.so.6
-COPY --from=BASE /lib/x86_64-linux-gnu/libm.so.6 /lib/x86_64-linux-gnu/libm.so.6
-COPY --from=BASE /lib/x86_64-linux-gnu/libcrypt.so.1 /lib/x86_64-linux-gnu/libcrypt.so.1
-COPY --from=BASE /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
-COPY --from=BASE /lib/x86_64-linux-gnu/libz.so.1 /lib/x86_64-linux-gnu/libz.so.1
-COPY --from=BASE /lib/x86_64-linux-gnu/librt.so.1 /lib/x86_64-linux-gnu/librt.so.1
-COPY --from=BASE /lib/x86_64-linux-gnu/libnss_compat.so.2 /lib/x86_64-linux-gnu/libnss_compat.so.2
-COPY --from=BASE /lib/x86_64-linux-gnu/libnss_files.so.2 /lib/x86_64-linux-gnu/libnss_files.so.2
-COPY --from=BASE /lib/x86_64-linux-gnu/libnss_nis.so.2 /lib/x86_64-linux-gnu/libnss_nis.so.2
-COPY --from=BASE /lib/x86_64-linux-gnu/libnsl.so.1 /lib/x86_64-linux-gnu/libnsl.so.1
-COPY --from=BASE /lib/x86_64-linux-gnu/libpthread.so.0 /lib/x86_64-linux-gnu/libpthread.so.0
-COPY --from=BASE /lib/x86_64-linux-gnu/libselinux.so.1 /lib/x86_64-linux-gnu/libselinux.so.1
-COPY --from=BASE /lib/x86_64-linux-gnu/libgcc_s.so.1 /lib/x86_64-linux-gnu/libgcc_s.so.1
-COPY --from=BASE /lib/x86_64-linux-gnu/libpcre.so.3 /lib/x86_64-linux-gnu/libpcre.so.3
-COPY --from=BASE /usr/lib/x86_64-linux-gnu/nss/libfreebl3.so /usr/lib/x86_64-linux-gnu/libfreebl3.so
+COPY --from=BASE /lib64/libtinfo.so.5 /lib64/libtinfo.so.5
+COPY --from=BASE /lib64/libdl.so.2 /lib64/libdl.so.2
+COPY --from=BASE /lib64/libc.so.6 /lib64/libc.so.6
+COPY --from=BASE /lib64/libm.so.6 /lib64/libm.so.6
+COPY --from=BASE /lib64/libcrypt.so.1 /lib64/libcrypt.so.1
+COPY --from=BASE /lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
+COPY --from=BASE /lib64/librt.so.1 /lib64/librt.so.1
+COPY --from=BASE /lib64/libnss_compat.so.2 /lib64/libnss_compat.so.2
+COPY --from=BASE /lib64/libnss_files.so.2 /lib64/libnss_files.so.2
+COPY --from=BASE /lib64/libnss_nis.so.2 /lib64/libnss_nis.so.2
+COPY --from=BASE /lib64/libnsl.so.1 /lib64/libnsl.so.1
+COPY --from=BASE /lib64/libpthread.so.0 /lib64/libpthread.so.0
+COPY --from=BASE /lib64/libselinux.so.1 /lib64/libselinux.so.1
+COPY --from=BASE /lib64/libgcc_s.so.1 /lib64/libgcc_s.so.1
+COPY --from=BASE /lib64/libpcre.so.1 /lib64/libpcre.so.1
+COPY --from=BASE /usr/lib64/nss/libnssckbi.so /usr/lib64/nss/libnssckbi.so
+COPY --from=base /lib64/libstdc++.so.6 /lib64/libstdc++.so.6
+#/usr/lib64/nss/libfreebl3.so /usr/lib64/libfreebl3.so
+COPY --from=BASE /lib64/libz.so.1.2.7 /lib64/libz.so.1
 
 COPY --from=BASE /bin/sh /bin/sh
 COPY --from=BASE /bin/mkdir /bin/mkdir

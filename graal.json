@@ -32,5 +32,19 @@
      "fields" : [
        { "name" : "lock", "allowWrite" : true }
      ]
+  },
+  {
+    "name" : "com.zaxxer.hikari.util.ConcurrentBag",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
+  },
+  {
+    "name" : "[Lcom.zaxxer.hikari.util.ConcurrentBag$IConcurrentBagEntry;",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true
   }
 ]
