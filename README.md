@@ -6,19 +6,34 @@ Standalone PostgreSQL Migration Runner using [Migratus](https://github.com/yogth
 
     lein with-profile native do clean, test, uberjar
 
-## Build docker base image
+## Build Linux binary to be run locally
 
-To create the graal vm base image follow [base image README](graalvm/README.md) in the `graalvm/` subdirectory.
+If you have already [GraalVM CE](https://github.com/graalvm/graalvm-ce-builds/releases) installed and properly set `GRAAL_HOME`, `JAVA_HOME` and `PATH` you can try to build and run the native image locally. You need **Graal 20.1.0** release with [native-image](https://www.graalvm.org/docs/reference-manual/native-image/) to build and deploy `pgmig` successfully.
+
+From the project directory create the uberjar and run the `create-image.sh` helper script.
+
+    lein with-profile native do clean, test, uberjar
+    ./create-image.sh target/uberjar/pgmig.jar
+
+You can use both `pgmig` command line options or environment variables when running it (env variables have the priority).
+
+    ./pgmig -h localhost -p 5432 -d pgmig -u pgmig -P pgmig -r samples/db/migrations pending
+
+Note that you need the same `.so` libraries that the native binary is linked to
+on the target machine. Also keep in mind that you might need to add
+`-Djava.library.path=<path-to-shared-libs>` as a `pgmig` option if it needs to load some
+libraries dynamically (including shared libraries from the JDK itself).
 
 ## Build docker image
 
-Once you have successfully built the base image you can create the migration runner image itself
+The docker image is based on the [GraalVM Community Edition Official Image](https://hub.docker.com/r/oracle/graalvm-ce/tags).  Once you have successfully built the uberjar you can create the migration runner image itself
 
+    lein with-profile native do clean, test, uberjar
     docker build -t leafclick/pgmig .
 
 # Usage
 
-## Uberjar 
+## Run uberjar with java 
 
 To try out the basic functionality you can run the uberjar itself. To get help and available commands run
 
@@ -28,7 +43,7 @@ To list pending migrations (uberjar)
 
     java -jar target/uberjar/pgmig.jar -h localhost -p 5432 -d pgmig -u pgmig -P pgmig -r samples/db/migrations pending
 
-## Linux binary within docker container
+## Run Linux binary within docker container
 
 To run the native image within the docker container set the environment, bind the migrations directory and specify the action
 
@@ -56,25 +71,6 @@ For now the expected output is something like this
     19-02-22 17:49:17 oryx INFO [pgmig.main:87] - #'pgmig.db.store/db-spec stopped
 
 You can safelly ignore warnings about unsupported features as they are not used by PGMig.
-
-## Linux binary running locally
-
-If you have already [GraalVM](https://github.com/oracle/graal/releases) installed and properly set `GRAAL_HOME`, `JAVA_HOME` and `PATH` you can try to build and run the native image locally.
-You need **Graal 19.3.1** long term release to build and deploy `pgmig` successfully.
-
-From the project directory create the uberjar and run the `create-image.sh` helper script.
-
-    lein with-profile native do clean, test, uberjar
-    ./create-image.sh target/uberjar/pgmig.jar
-
-You can use both direct `pgmig` options or environment variables when running it (env variables have the priority).
-
-    ./pgmig -h localhost -p 5432 -d pgmig -u pgmig -P pgmig -r samples/db/migrations pending
-
-Note that you need the same `.so` libraries that the native binary is linked to
-on a target machine. Also keep in mind that you might need to add
-`-Djava.library.path=<path-to-shared-libs>` as a `pgmig` option if it needs to load some
-libraries dynamically (including shared libraries from the JDK itself).
 
 # Limitations
 
