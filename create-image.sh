@@ -15,7 +15,7 @@ native-image --verbose \
     --no-fallback \
     --allow-incomplete-classpath \
     --report-unsupported-elements-at-runtime \
-    --enable-url-protocols=http \
+    --enable-url-protocols=http,https \
     --initialize-at-build-time \
     --initialize-at-run-time=org.postgresql.sspi.NTDSAPI \
     --initialize-at-run-time=com.sun.jna.platform.win32.Secur32 \
