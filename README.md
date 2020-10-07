@@ -2,6 +2,13 @@
 
 Standalone PostgreSQL Migration Runner using [Migratus](https://github.com/yogthos/migratus).
 
+## Changelog
+
+There are **BREAKING changes** since release `0.4.0` changing most environment variables and some command line options
+to match `psql`.
+
+See [Changelog](CHANGELOG.md) for upgrade path hints.
+
 ## Build uberjar
 
     lein with-profile native do clean, test, uberjar
@@ -17,7 +24,7 @@ From the project directory create the uberjar and run the `create-image.sh` help
 
 You can use both `pgmig` command line options or environment variables when running it (env variables have the priority).
 
-    ./pgmig -h localhost -p 5432 -d pgmig -u pgmig -P pgmig -r samples/db/migrations pending
+    ./pgmig -h localhost -p 5432 -d pgmig -U pgmig -P pgmig -r samples/db/migrations pending
 
 Note that you need the same `.so` libraries that the native binary is linked to
 on the target machine. Also keep in mind that you might need to add
@@ -49,28 +56,19 @@ To run the native image within the docker container set the environment, bind th
 
     docker run -ti \
                --mount "type=bind,src=$PWD/samples/db/migrations,dst=/migrations" \
-               -e SERVER_HOST=172.17.0.2 \
-               -e DATABASE_NAME=pgmig \
-               -e DBUSER=pgmig \
-               -e DBPASS=pgmig \
+               -e PGHOST=172.17.0.2 \
+               -e PGDATABASE=pgmig \
+               -e PGUSER=pgmig \
+               -e PGPASSWORD=pgmig \
                -e RESOURCE_DIR=migrations \
                leafclick/pgmig pending
                
 For now the expected output is something like this
 
-    19-02-22 17:49:17 oryx INFO [com.zaxxer.hikari.HikariDataSource:80] - HikariPool-1 - Starting...
-    19-02-22 17:49:17 oryx INFO [com.zaxxer.hikari.HikariDataSource:82] - HikariPool-1 - Start completed.
-    19-02-22 17:49:17 oryx INFO [pgmig.main:106] - #'pgmig.config/env started
-    19-02-22 17:49:17 oryx INFO [pgmig.main:106] - #'pgmig.db.store/db-spec started
-    19-02-22 17:49:17 oryx INFO [pgmig.migration:11] - Using migration dir 'samples/db/migrations'
-    19-02-22 17:49:17 oryx INFO [pgmig.migration:27] - You have 2 PENDING migration(s):
-    [20180830154000 "first"]
-    [20190216143455 "second"]
-    19-02-22 17:49:17 oryx INFO [com.zaxxer.hikari.HikariDataSource:350] - HikariPool-1 - Shutdown initiated...
-    19-02-22 17:49:17 oryx INFO [com.zaxxer.hikari.HikariDataSource:352] - HikariPool-1 - Shutdown completed.
-    19-02-22 17:49:17 oryx INFO [pgmig.main:87] - #'pgmig.db.store/db-spec stopped
+        20180830154000 first
+        20190216143455 second
 
-You can safelly ignore warnings about unsupported features as they are not used by PGMig.
+You can safely ignore warnings about unsupported features as they are not used by PGMig.
 
 # Limitations
 
@@ -86,4 +84,3 @@ Because of this the only supported(*) JDBC driver is PostgreSQL JDBC DataSource 
 Copyright © 2019-2020 leafclick s.r.o.
 
 Licensed under the Apache License, Version 2.0.
-

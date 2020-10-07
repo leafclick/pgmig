@@ -1,28 +1,68 @@
 (ns pgmig.main
   (:require [pgmig.migration :as migration]
+            [environ.core :as environ]
             [mount.core :as mount]
             [clojure.string :as str]
             [clojure.tools.cli :as cli]
-            [taoensso.timbre :as log])
+            [taoensso.timbre :as log]
+            [pgmig.config :as config])
   (:gen-class))
 
+(def env (atom {}))
+
+(defn env-str
+  [k]
+  (get @env k))
+
+(defn env-int
+  [k]
+  (when-let [es (env-str k)]
+    (Long/parseLong es)))
+
+(defn env-kw
+  [k]
+  (when-let [es (env-str k)]
+    (keyword es)))
 
 (def cli-options
   [["-a" "--adapter ADAPTER" "Database Adapter"
-    :default "postgresql"]
-   ["-h" "--server-host SERVER_HOST" "Database Host Address"
-    :default "localhost"]
-   ["-p" "--server-port SERVER_PORT" "Database Port Number"
-    :default 5432
+    :default-fn (fn [_]
+                  (or (env-str :adapter)
+                      "postgresql"))
+    :default-desc "postgresql"]
+   ["-h" "--host PGHOST" "Database Host Address"
+    :default-fn (fn [_]
+                  (or (env-str :pghost)
+                      "localhost"))
+    :default-desc "localhost"]
+   ["-p" "--port PGPORT" "Database Port Number"
+    :default-fn (fn [_]
+                  (or (env-int :pgport)
+                      5432))
+    :default-desc "5432"
     :parse-fn #(Integer/parseInt %)]
-   ["-d" "--database-name DATABASE_NAME" "Database Name"]
-   ["-u" "--dbuser DBUSER" "Database User"]
-   ["-P" "--dbpass DBPASS" "Database User's Password"]
-   ["-j" "--jdbc-url JDBC_URL" "JDBC Connection URL"]
+   ["-d" "--dbname PGDATABASE" "Database Name"
+    :default-fn (fn [_]
+                  (env-str :pgdatabase))]
+   ["-U" "--username PGUSER" "Database User"
+    :default-fn (fn [_]
+                  (env-str :pguser))]
+   ["-P" "--password PGPASSWORD" "Database User's Password"
+    :default-fn (fn [_]
+                  (env-str :pgpassword))]
+   ["-j" "--jdbc-url JDBC_URL" "JDBC Connection URL"
+    :default-fn (fn [_]
+                  (env-str :jdbc-url))]
    ["-r" "--resource-dir RESOURCE_DIR" "Resources Directory"
-    :default "db/migrations"]
+    :default-fn (fn [_]
+                  (or (env-str :resource-dir)
+                      config/DEFAULT-MIGRATION-DIR))
+    :default-desc config/DEFAULT-MIGRATION-DIR]
    ["-l" "--level LEVEL" "Verbosity Level (trace/debug/info/warn/error)"
-    :default :info
+    :default-fn (fn [_]
+                  (or (env-kw :level)
+                      :warn))
+    :default-desc "warn"
     :parse-fn (comp keyword str/lower-case)]
    ["" "--help"]])
 
@@ -30,9 +70,14 @@
   (str "The following errors occurred while parsing your command:\n\n"
        (str/join \newline errors)))
 
-(defn exit [status msg]
+(defn exit [msg]
   (println msg)
-  (System/exit status))
+  (System/exit 0))
+
+(defn exit-error [status msg]
+  (binding [*out* *err*]
+    (println msg)
+    (System/exit status)))
 
 (defn usage [options-summary]
   (->> ["Standalone PostgreSQL Migration Runner"
@@ -53,6 +98,13 @@
         "create     create a new migration with current timestamp"]
        (str/join \newline)))
 
+(defn validate-command [{:keys [action options] :as command}]
+  (if (#{"init" "list"} action)
+    command
+    (if-let [resource-dir (config/get-resource-dir options)]
+      (assoc-in command [:options :resource-dir] resource-dir)
+      (assoc command :exit-message (str "Cannot access resources directory '" (:resource-dir options) "'")))))
+
 (defn parse-and-validate-args
   "Validate command line arguments. Either return a map indicating the program
   should exit (with a error message, and optional ok status), or a map
@@ -69,15 +121,15 @@
       ;; custom validation on arguments
       (and (= (count arguments) 1)
            (#{"init" "list" "pending" "migrate" "reset"} (first arguments)))
-      {:action (first arguments) :options options}
+      (validate-command {:action (first arguments) :options options})
 
       (and (> (count arguments) 1)
            (#{"create"} (first arguments)))
-      {:action (first arguments) :arguments (str/join " " (rest arguments)) :options options}
+      (validate-command {:action (first arguments) :arguments (str/join " " (rest arguments)) :options options})
 
       (and (> (count arguments) 1)
            (#{"up" "down" "create"} (first arguments)))
-      {:action (first arguments) :arguments (map #(Long/parseLong %) (rest arguments)) :options options}
+      (validate-command {:action (first arguments) :arguments (map #(Long/parseLong %) (rest arguments)) :options options})
 
       :else                                                 ; failed custom validation => exit with usage summary
       {:exit-message (usage summary)})))
@@ -106,12 +158,23 @@
     (log/info component "started"))
   (.addShutdownHook (Runtime/getRuntime) (Thread. ^Runnable stop-app)))
 
+(defn read-env []
+  (let [merge-env #'environ/merge-env
+        read-system-env #'environ/read-system-env
+        read-system-props #'environ/read-system-props]
+    (merge-env
+      (read-system-env)
+      (read-system-props))))
+
 (defn -main
   [& raw-args]
+  (reset! env (read-env))
   (let [{:keys [exit-message ok?] :as args}
         (parse-and-validate-args raw-args)]
-    (if exit-message
-      (exit (if ok? 0 1) exit-message)
+    (if-not exit-message
       (do
         (start-app (:options args))
-        (run-action args)))))
+        (run-action args))
+      (if ok?
+        (exit exit-message)
+        (exit-error 1 exit-message)))))

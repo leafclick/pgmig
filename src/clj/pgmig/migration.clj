@@ -1,13 +1,12 @@
 (ns pgmig.migration
   (:require [migratus.core :as migratus]
-            [clojure.string :as str]
             [taoensso.timbre :as log]
-            [pgmig.config :refer [env]]
+            [pgmig.config :as config]
             [pgmig.db.store :refer [db-spec]]))
 
 
 (defn migration-config []
-  (let [migration-dir (:resource-dir env)]
+  (let [migration-dir (:resource-dir config/env)]
     (log/info (str "Using migration dir '" migration-dir "'"))
     {:store         :database
      :migration-dir migration-dir
@@ -22,17 +21,21 @@
 (defn reset []
   (migratus/reset (migration-config)))
 
+(defn print-migrations [migrations]
+  (doseq [[id name] migrations]
+    (println (str id " " name))))
+
 (defn pending []
-  (let [migrations (migratus/select-migrations (migration-config) migratus/uncompleted-migrations)]
-    (log/info (apply str "You have " (count migrations) " PENDING migration(s)"
-                     (if-not (empty? migrations) ":\n" ".")
-                     (str/join "\n" migrations)))))
+  (let [migrations (->> (migratus/select-migrations (migration-config) migratus/uncompleted-migrations)
+                        (sort-by first))]
+    (log/info "Pending migrations:" (count migrations))
+    (print-migrations migrations)))
 
 (defn list-migrations []
-  (let [migrations (migratus/select-migrations (migration-config) migratus/completed-migrations)]
-    (log/info (apply str "You have " (count migrations) " completed migration(s)"
-                     (if-not (empty? migrations) ":\n" ".")
-                     (str/join "\n" migrations)))))
+  (let [migrations (->> (migratus/select-migrations (migration-config) migratus/completed-migrations)
+                        (sort-by first))]
+    (log/info "Completed migrations:" (count migrations))
+    (print-migrations migrations)))
 
 (defn up [arguments]
   (apply migratus/up (migration-config) arguments))

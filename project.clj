@@ -10,7 +10,7 @@
                  [com.taoensso/timbre "4.10.0"]
                  [hikari-cp "1.8.3" :exclusions [com.zaxxer/HikariCP org.slf4j/slf4j-api]]
                  [mount "0.1.16"]
-                 [cprop "0.1.17"]
+                 [environ/environ "1.2.0"]
                  [com.fzakaria/slf4j-timbre "0.3.19" :exclusions [org.clojure/clojure]]
                  [org.slf4j/slf4j-api "1.7.30"]
                  [org.slf4j/log4j-over-slf4j "1.7.30"]
