@@ -4,7 +4,7 @@ This change log follows the conventions of [keepachangelog.com](http://keepachan
 
 ## [Unreleased]
 
-## [0.4.0] - 2020-10-07
+## [0.4.0] - 2020-10-08
 ### Breaking changes
 - Command line options have the highest priority (overriding environment variables)
 - Environment variables have been changed to match `psql` environment
@@ -24,7 +24,7 @@ This change log follows the conventions of [keepachangelog.com](http://keepachan
 
 ### Changes
 - Updated to GraalVM 20.2.0.
-- Better logging defaults
+- No verbose logging defaults.
 - Bumped deps.
 
 ### Added

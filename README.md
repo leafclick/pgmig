@@ -22,14 +22,17 @@ From the project directory create the uberjar and run the `create-image.sh` help
     lein with-profile native do clean, test, uberjar
     ./create-image.sh target/uberjar/pgmig.jar
 
-You can use both `pgmig` command line options or environment variables when running it (env variables have the priority).
+You can use both `pgmig` command line options or environment variables when running it (command line options have the priority).
 
     ./pgmig -h localhost -p 5432 -d pgmig -U pgmig -P pgmig -r samples/db/migrations pending
+
+Status code 0 is returned on success, non-zero return code signals an error.
 
 Note that you need the same `.so` libraries that the native binary is linked to
 on the target machine. Also keep in mind that you might need to add
 `-Djava.library.path=<path-to-shared-libs>` as a `pgmig` option if it needs to load some
 libraries dynamically (including shared libraries from the JDK itself).
+When building the docker image the `.so` library addition is done automatically.
 
 ## Build docker image
 
