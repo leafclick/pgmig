@@ -99,11 +99,9 @@
        (str/join \newline)))
 
 (defn validate-command [{:keys [action options] :as command}]
-  (if (#{"init" "list"} action)
-    command
-    (if-let [resource-dir (config/get-resource-dir options)]
-      (assoc-in command [:options :resource-dir] resource-dir)
-      (assoc command :exit-message (str "Cannot access resources directory '" (:resource-dir options) "'")))))
+  (if-let [resource-dir (config/get-resource-dir options)]
+    (assoc-in command [:options :resource-dir] resource-dir)
+    (assoc command :exit-message (str "Cannot access resources directory '" (:resource-dir options) "'"))))
 
 (defn parse-and-validate-args
   "Validate command line arguments. Either return a map indicating the program
