@@ -55,6 +55,7 @@ To list pending migrations (uberjar)
 To run the native image within the docker container set the environment, bind the migrations directory and specify the action
 
     docker run -ti \
+               --rm \
                --mount "type=bind,src=$PWD/samples/db/migrations,dst=/migrations" \
                -e PGHOST=172.17.0.2 \
                -e PGDATABASE=pgmig \
