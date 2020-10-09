@@ -1,6 +1,6 @@
 # PGMig
 
-Standalone PostgreSQL Migration Runner using [Migratus](https://github.com/yogthos/migratus).
+Standalone PostgreSQL Migration Runner using [Migratus](https://github.com/yogthos/migratus) runnable as a native-image binary.
 
 ## Changelog
 
@@ -76,7 +76,7 @@ You can safely ignore warnings about unsupported features as they are not used b
 
 # Limitations
 
-There is a number of Graal's [SubstrateVM LIMITATTIONS](https://github.com/oracle/graal/blob/master/substratevm/LIMITATIONS.md)
+There is a number of Graal's [SubstrateVM LIMITATTIONS](https://github.com/oracle/graal/blob/master/substratevm/Limitations.md)
 and they all apply to PGMig.
 
 Because of this the only supported(*) JDBC driver is PostgreSQL JDBC DataSource which is bundled with PGMig binary.
