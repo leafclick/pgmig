@@ -64,6 +64,12 @@
                       :warn))
     :default-desc "warn"
     :parse-fn (comp keyword str/lower-case)]
+   ["-f" "--format " "Migration FORMAT (sql/edn)"
+    :default-fn (fn [_]
+                  (or (env-kw :format)
+                      :sql))
+    :default-desc "sql"
+    :parse-fn (comp keyword str/lower-case)]
    ["" "--help"]])
 
 (defn error-msg [errors]
@@ -137,7 +143,7 @@
     (log/info component "stopped"))
   (shutdown-agents))
 
-(defn run-action [args]
+(defn run-action [args options]
   (let [{:keys [action arguments]} args]
     (case action
       "init" (migration/init)
@@ -147,7 +153,7 @@
       "reset" (migration/reset)
       "up" (migration/up arguments)
       "down" (migration/down arguments)
-      "create" (migration/create arguments))))
+      "create" (migration/create arguments options))))
 
 (defn start-app [args]
   (doseq [component (-> args
@@ -167,12 +173,12 @@
 (defn -main
   [& raw-args]
   (reset! env (read-env))
-  (let [{:keys [exit-message ok?] :as args}
+  (let [{:keys [exit-message ok? options] :as args}
         (parse-and-validate-args raw-args)]
     (if-not exit-message
       (do
-        (start-app (:options args))
-        (run-action args))
+        (start-app options)
+        (run-action args options))
       (if ok?
         (exit exit-message)
         (exit-error 1 exit-message)))))

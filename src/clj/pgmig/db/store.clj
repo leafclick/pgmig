@@ -7,7 +7,7 @@
 
 (def default-datasource-options
   {:minimum-idle       1
-   :maximum-pool-size  1})
+   :maximum-pool-size  2})
 
 (defn datasource-options [config]
   (let [{:keys [adapter host port dbname username password jdbc-url]} config

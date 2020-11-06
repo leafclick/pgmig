@@ -2,7 +2,8 @@
   (:require [migratus.core :as migratus]
             [taoensso.timbre :as log]
             [pgmig.config :as config]
-            [pgmig.db.store :refer [db-spec]]))
+            [pgmig.db.store :refer [db-spec]]
+            [pgmig.migration.sci]))
 
 
 (defn migration-config []
@@ -43,5 +44,5 @@
 (defn down [arguments]
   (apply migratus/down (migration-config) arguments))
 
-(defn create [arguments]
-  (migratus/create (migration-config) arguments))
+(defn create [arguments options]
+  (migratus/create (migration-config) arguments (:format options)))

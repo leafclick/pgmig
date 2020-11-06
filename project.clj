@@ -1,4 +1,4 @@
-(defproject com.leafclick/pgmig "0.4.0"
+(defproject com.leafclick/pgmig "0.5.0-SNAPSHOT"
 
   :description "Standalone PostgreSQL Migration Runner"
   :url "https://github.com/leafclick/pgmig"
@@ -21,7 +21,10 @@
                  [org.clojure/tools.cli "1.0.194"]
                  [com.leafclick/hikariCP "HikariCP-3.3.2-graal-RC4"]
                  [org.postgresql/postgresql "42.2.16"]
-                 [migratus "1.3.0" :exclusions [org.clojure/clojure]]
+                 [migratus "1.3.2" :exclusions [org.clojure/clojure]]
+                 [seancorfield/next.jdbc "1.1.613"]
+                 [borkdude/sci "0.1.1-alpha.9"]
+                 [borkdude/babashka "0.2.3"]
                  [com.taoensso/tower "3.1.0-beta4"]
                  [com.taoensso/encore "2.122.0"]
                  [trptcolin/versioneer "0.2.0"]]

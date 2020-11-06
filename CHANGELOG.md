@@ -4,6 +4,12 @@ This change log follows the conventions of [keepachangelog.com](http://keepachan
 
 ## [Unreleased]
 
+### Added
+- Add cli option for the migration format: sql (default), edn
+- Support EDN migrations (uberjar only)
+
+## [0.5.0] - 2020-11-06
+
 ## [0.4.0] - 2020-10-08
 ### Breaking changes
 - Command line options have the highest priority (overriding environment variables)
