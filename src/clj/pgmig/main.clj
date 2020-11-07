@@ -5,7 +5,8 @@
             [clojure.string :as str]
             [clojure.tools.cli :as cli]
             [taoensso.timbre :as log]
-            [pgmig.config :as config])
+            [pgmig.config :as config]
+            [clojure.java.io :as io])
   (:gen-class))
 
 (def env (atom {}))
@@ -64,12 +65,15 @@
                       :warn))
     :default-desc "warn"
     :parse-fn (comp keyword str/lower-case)]
-   ["-f" "--format " "Migration FORMAT (sql/edn)"
+   ["-f" "--format " "Migration FORMAT (sql/clj/edn)"
     :default-fn (fn [_]
                   (or (env-kw :format)
                       :sql))
     :default-desc "sql"
     :parse-fn (comp keyword str/lower-case)]
+   ["-c" "--classpath " "Classpath for migration support code"
+    :default-fn (fn [_]
+                  (or (env-str :classpath) "."))]
    ["" "--help"]])
 
 (defn error-msg [errors]
@@ -146,13 +150,13 @@
 (defn run-action [args options]
   (let [{:keys [action arguments]} args]
     (case action
-      "init" (migration/init)
-      "list" (migration/list-migrations)
-      "pending" (migration/pending)
-      "migrate" (migration/migrate)
-      "reset" (migration/reset)
-      "up" (migration/up arguments)
-      "down" (migration/down arguments)
+      "init" (migration/init options)
+      "list" (migration/list-migrations options)
+      "pending" (migration/pending options)
+      "migrate" (migration/migrate options)
+      "reset" (migration/reset options)
+      "up" (migration/up arguments options)
+      "down" (migration/down arguments options)
       "create" (migration/create arguments options))))
 
 (defn start-app [args]

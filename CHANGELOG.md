@@ -5,7 +5,8 @@ This change log follows the conventions of [keepachangelog.com](http://keepachan
 ## [Unreleased]
 
 ### Added
-- Add cli option for the migration format: sql (default), edn
+- Support native-image programmatic migrations via [Small Clojure Interpreter (sci)](https://github.com/borkdude/sci)
+- Add cli option for the migration format: sql (default), clj, edn
 - Support EDN migrations (uberjar only)
 
 ## [0.5.0] - 2020-11-06

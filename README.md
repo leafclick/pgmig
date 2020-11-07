@@ -43,6 +43,36 @@ The docker image is based on the [GraalVM Community Edition Official Image](http
 
 # Usage
 
+PGMig supports following commands:
+
+   | Function | Description                                                                               |
+   |----------|-------------------------------------------------------------------------------------------|
+   | `init`   | Runs a script to initialize the database, e.g: create a new schema.                       |
+   | `list`   | List migrations already applied.                                                          |
+   | `pending`| List all pending migrations.                                                              |
+   | `migrate`| Run 'up' for any migrations that have not been run.                                       |
+   | `up`     | Run 'up' for the specified migration ids. Will skip any migration that is already up.     |
+   | `down`   | Run 'down' for the specified migration ids. Will skip any migration that is already down. |
+   | `reset`  | Run 'down' all migrations and run 'up' all migrations again.                              |
+   | `create` | Create a new migration using the given name with the current date and time.               |
+
+The following options skip all other actions:
+
+   | Function    | Description                                                                            |
+   |-------------|----------------------------------------------------------------------------------------|
+   | `--help`    | Print the usage summary.                                                               |
+   | `--version` | Print the current 'pgmig' version.                                                     |
+
+## Run the native image directly
+
+For example to apply all pending migrations run the `migrate` command
+
+    pgmig -h localhost -p 5432 -d pgmig -U pgmig -P pgmig -r samples/db/migrations --classpath samples/db/clj migrate
+
+Note that if you use clj programmatic migrations (using [sci](https://github.com/borkdude/sci)) you need to list
+all directories that contain migration support code files (if there is any). You can usually create a classpath
+list by running `lein classpath` or `clj -Spath` in the project.
+
 ## Run uberjar with java 
 
 To try out the basic functionality you can run the uberjar itself. To get help and available commands run
@@ -51,7 +81,7 @@ To try out the basic functionality you can run the uberjar itself. To get help a
 
 To list pending migrations (uberjar)
 
-    java -jar target/uberjar/pgmig.jar -h localhost -p 5432 -d pgmig -u pgmig -P pgmig -r samples/db/migrations pending
+    java -jar target/uberjar/pgmig.jar -h localhost -p 5432 -d pgmig -U pgmig -P pgmig -r samples/db/migrations pending
 
 ## Run Linux binary within docker container
 
@@ -60,17 +90,20 @@ To run the native image within the docker container set the environment, bind th
     docker run -ti \
                --rm \
                --mount "type=bind,src=$PWD/samples/db/migrations,dst=/migrations" \
+               --mount "type=bind,src=$PWD/samples/db/clj,dst=/clj" \
                -e PGHOST=172.17.0.2 \
                -e PGDATABASE=pgmig \
                -e PGUSER=pgmig \
                -e PGPASSWORD=pgmig \
                -e RESOURCE_DIR=migrations \
-               leafclick/pgmig pending
+               -e CLASSPATH=clj \
+               leafclick/pgmig migrate
                
 For now the expected output is something like this
 
-        20180830154000 first
-        20190216143455 second
+    20180830154000 first
+    20190216143455 second
+    20201106155531 programmatic-third
 
 You can safely ignore warnings about unsupported features as they are not used by PGMig.
 
