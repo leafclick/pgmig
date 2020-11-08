@@ -1,4 +1,6 @@
-(defproject com.leafclick/pgmig "0.5.0-SNAPSHOT"
+(defproject com.leafclick/pgmig
+  #=(clojure.string/trim
+      #=(slurp "resources/PGMIG_VERSION"))
 
   :description "Standalone PostgreSQL Migration Runner"
   :url "https://github.com/leafclick/pgmig"

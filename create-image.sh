@@ -12,6 +12,7 @@ native-image --verbose \
     -H:IncludeResources='com/ibm/icu/impl/duration/impl/data/icudt58b/.*' \
     -H:IncludeResources='com/ibm/icu/.*\.properties' \
     -H:IncludeResources='com/github/fge/.*\.properties' \
+    -H:IncludeResources='PGMIG_VERSION' \
     --no-fallback \
     --allow-incomplete-classpath \
     --report-unsupported-elements-at-runtime \

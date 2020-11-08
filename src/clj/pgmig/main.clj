@@ -74,6 +74,7 @@
    ["-c" "--classpath " "Classpath for migration support code"
     :default-fn (fn [_]
                   (or (env-str :classpath) "."))]
+   ["-V" "--version" "Print PGMig version and quit"]
    ["" "--help"]])
 
 (defn error-msg [errors]
@@ -108,6 +109,10 @@
         "create     create a new migration with current timestamp"]
        (str/join \newline)))
 
+(defn version []
+  (let [pgmig-version (slurp (io/resource "PGMIG_VERSION"))]
+    (str "pgmig " pgmig-version)))
+
 (defn validate-command [{:keys [action options] :as command}]
   (if-let [resource-dir (config/get-resource-dir options)]
     (assoc-in command [:options :resource-dir] resource-dir)
@@ -122,6 +127,9 @@
     (cond
       (:help options)                                       ; help => exit OK with usage summary
       {:exit-message (usage summary) :ok? true}
+
+      (:version options)                                    ; help => exit OK version string
+      {:exit-message (version) :ok? true}
 
       errors                                                ; errors => exit with description of errors
       {:exit-message (error-msg errors)}
