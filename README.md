@@ -9,7 +9,7 @@ to match `psql`.
 
 See [Changelog](CHANGELOG.md) for upgrade path hints.
 
-#Installation
+# Installation
 
 ## Github Releases
 There are prebuild binaries that you can download from [Github Releases](https://github.com/leafclick/pgmig/releases).
