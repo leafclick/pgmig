@@ -22,7 +22,7 @@ The latest PGMig build can be pulled from the [dockerhub](https://hub.docker.com
 Follow the [build instructions](#build-linux-binary-to-be-run-locally) below and place the resulting binary in your path,
  e.g. to `/usr/local/bin`.
 
-#Building PGMig
+# Building PGMig
 
 ## Build uberjar
 
