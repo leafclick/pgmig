@@ -8,12 +8,12 @@
             :url          "http://www.apache.org/licenses/LICENSE-2.0.html"
             :distribution :repo}
 
-  :dependencies [[org.clojure/clojure "1.10.2-alpha1"]
+  :dependencies [[org.clojure/clojure "1.10.2-alpha4"]
                  [com.taoensso/timbre "4.10.0"]
                  [hikari-cp "1.8.3" :exclusions [com.zaxxer/HikariCP org.slf4j/slf4j-api]]
                  [mount "0.1.16"]
                  [environ/environ "1.2.0"]
-                 [com.fzakaria/slf4j-timbre "0.3.19" :exclusions [org.clojure/clojure]]
+                 [com.fzakaria/slf4j-timbre "0.3.20" :exclusions [org.clojure/clojure]]
                  [org.slf4j/slf4j-api "1.7.30"]
                  [org.slf4j/log4j-over-slf4j "1.7.30"]
                  [org.slf4j/jul-to-slf4j "1.7.30"]
@@ -22,7 +22,7 @@
                  [org.clojure/java.jdbc "0.7.11"]
                  [org.clojure/tools.cli "1.0.194"]
                  [com.leafclick/hikariCP "HikariCP-3.3.2-graal-RC4"]
-                 [org.postgresql/postgresql "42.2.16"]
+                 [org.postgresql/postgresql "42.2.18"]
                  [migratus "1.3.2" :exclusions [org.clojure/clojure]]
                  [seancorfield/next.jdbc "1.1.613"]
                  [borkdude/sci "0.1.1-alpha.9"]
