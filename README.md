@@ -9,6 +9,21 @@ to match `psql`.
 
 See [Changelog](CHANGELOG.md) for upgrade path hints.
 
+#Installation
+
+## Github Releases
+There are prebuild binaries that you can download from [Github Releases](https://github.com/leafclick/pgmig/releases).
+
+## Docker Image Releases
+The latest PGMig build can be pulled from the [dockerhub](https://hub.docker.com/r/leafclick/pgmig).
+
+## Installing From Sources
+
+Follow the [build instructions](#build-linux-binary-to-be-run-locally) below and place the resulting binary in your path,
+ e.g. to `/usr/local/bin`.
+
+#Building PGMig
+
 ## Build uberjar
 
     lein with-profile native do clean, test, uberjar
@@ -116,7 +131,7 @@ Because of this the only supported(*) JDBC driver is PostgreSQL JDBC DataSource 
 
 (*) *not all features are supported but the basics work well*
                
-## License
+# License
 
 Copyright © 2019-2020 leafclick s.r.o.
 
