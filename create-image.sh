@@ -21,5 +21,5 @@ native-image --verbose \
     --initialize-at-run-time=org.postgresql.sspi.NTDSAPI \
     --initialize-at-run-time=com.sun.jna.platform.win32.Secur32 \
     --initialize-at-run-time=com.sun.jna.platform.win32.Kernel32 \
-    --initialize-at-run-time='java.lang.Math$RandomNumberGeneratorHolder' \
+    --initialize-at-run-time=org.postgresql.sspi.SSPIClient \
     -jar "$uberjar"

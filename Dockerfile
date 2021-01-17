@@ -1,6 +1,6 @@
-FROM oracle/graalvm-ce:20.2.0-java11 as BASE
+FROM oracle/graalvm-ce:20.3.0-java11 as BASE
 
-ENV GRAAL_HOME=/opt/graalvm-ce-java11-20.2.0/
+ENV GRAAL_HOME=/opt/graalvm-ce-java11-20.3.0/
 
 RUN gu install native-image
 RUN update-alternatives --install /usr/bin/native-image native-image $GRAAL_HOME/bin/native-image 1

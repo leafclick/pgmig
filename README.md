@@ -30,7 +30,7 @@ Follow the [build instructions](#build-linux-binary-to-be-run-locally) below and
 
 ## Build Linux binary to be run locally
 
-If you have already [GraalVM CE](https://github.com/graalvm/graalvm-ce-builds/releases) installed and properly set `GRAAL_HOME`, `JAVA_HOME` and `PATH` you can try to build and run the native image locally. You need **Graal 20.2.0** release with [native-image](https://www.graalvm.org/docs/reference-manual/native-image/) to build and deploy `pgmig` successfully.
+If you have already [GraalVM CE](https://github.com/graalvm/graalvm-ce-builds/releases) installed and properly set `GRAAL_HOME`, `JAVA_HOME` and `PATH` you can try to build and run the native image locally. You need **Graal 20.3.0** release with [native-image](https://www.graalvm.org/docs/reference-manual/native-image/) to build and deploy `pgmig` successfully.
 
 From the project directory create the uberjar and run the `create-image.sh` helper script.
 
