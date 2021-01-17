@@ -8,7 +8,7 @@
             :url          "http://www.apache.org/licenses/LICENSE-2.0.html"
             :distribution :repo}
 
-  :dependencies [[org.clojure/clojure "1.10.2-alpha4"]
+  :dependencies [[org.clojure/clojure "1.10.2-rc3"]
                  [com.taoensso/timbre "4.10.0"]
                  [hikari-cp "1.8.3" :exclusions [com.zaxxer/HikariCP org.slf4j/slf4j-api]]
                  [mount "0.1.16"]
@@ -23,10 +23,10 @@
                  [org.clojure/tools.cli "1.0.194"]
                  [com.leafclick/hikariCP "HikariCP-3.3.2-graal-RC4"]
                  [org.postgresql/postgresql "42.2.18"]
-                 [migratus "1.3.2" :exclusions [org.clojure/clojure]]
+                 [migratus "1.3.4" :exclusions [org.clojure/clojure]]
                  [seancorfield/next.jdbc "1.1.613"]
-                 [borkdude/sci "0.1.1-alpha.9"]
-                 [borkdude/babashka "0.2.3"]
+                 [borkdude/sci "0.2.1-alpha.1"]
+                 [borkdude/babashka "0.2.6"]
                  [com.taoensso/tower "3.1.0-beta4"]
                  [com.taoensso/encore "2.122.0"]
                  [trptcolin/versioneer "0.2.0"]]
@@ -62,7 +62,7 @@
                      :resource-paths ["env/docker/resources"]}
    :project/dev     {:dependencies   [[prone "2020-01-17"]
                                       [org.clojure/test.check "1.1.0"]
-                                      [circleci/circleci.test "0.4.3"]]
+                                      [circleci/circleci.test "0.5.0"]]
                      :source-paths   ["env/dev/clj"]
                      :test-paths     ["test/clj"]
                      :resource-paths ["env/dev/resources"]
