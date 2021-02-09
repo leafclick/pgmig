@@ -8,7 +8,7 @@
             :url          "http://www.apache.org/licenses/LICENSE-2.0.html"
             :distribution :repo}
 
-  :dependencies [[org.clojure/clojure "1.10.2-rc3"]
+  :dependencies [[org.clojure/clojure "1.10.2"]
                  [com.taoensso/timbre "4.10.0"]
                  [hikari-cp "1.8.3" :exclusions [com.zaxxer/HikariCP org.slf4j/slf4j-api]]
                  [mount "0.1.16"]
@@ -19,13 +19,13 @@
                  [org.slf4j/jul-to-slf4j "1.7.30"]
                  [org.slf4j/jcl-over-slf4j "1.7.30"]
                  [org.clojure/tools.logging "1.1.0"]
-                 [org.clojure/java.jdbc "0.7.11"]
+                 [org.clojure/java.jdbc "0.7.12"]
                  [org.clojure/tools.cli "1.0.194"]
                  [com.leafclick/hikariCP "HikariCP-3.3.2-graal-RC4"]
                  [org.postgresql/postgresql "42.2.18"]
                  [migratus "1.3.4" :exclusions [org.clojure/clojure]]
                  [seancorfield/next.jdbc "1.1.613"]
-                 [borkdude/sci "0.2.1-alpha.1"]
+                 [borkdude/sci "0.2.1"]
                  [borkdude/babashka "0.2.6"]
                  [com.taoensso/tower "3.1.0-beta4"]
                  [com.taoensso/encore "2.122.0"]
