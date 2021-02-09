@@ -85,7 +85,7 @@ For example to apply all pending migrations run the `migrate` command
     pgmig -h localhost -p 5432 -d pgmig -U pgmig -P pgmig -r samples/db/migrations --classpath samples/db/clj migrate
 
 Note that if you use clj programmatic migrations (using [sci](https://github.com/borkdude/sci)) you need to list
-all directories that contain migration support code files (if there is any). You can usually create a classpath
+all directories that contain migration support code files (if there are any). You can usually create a classpath
 list by running `lein classpath` or `clj -Spath` in the project.
 
 ## Run uberjar with java 
