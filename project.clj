@@ -25,7 +25,7 @@
                  [org.postgresql/postgresql "42.2.18"]
                  [migratus "1.3.4" :exclusions [org.clojure/clojure]]
                  [seancorfield/next.jdbc "1.1.613"]
-                 [borkdude/sci "0.2.1"]
+                 [borkdude/sci "0.2.3"]
                  [borkdude/babashka "0.2.6"]
                  [com.taoensso/tower "3.1.0-beta4"]
                  [com.taoensso/encore "2.122.0"]
@@ -69,7 +69,7 @@
                      :repl-options   {:init-ns user}}
 
    :project/graal   {:dependencies [[com.github.dblock.waffle/waffle-jna "1.8.1" :exclusions [com.google.guava/guava net.java.dev.jna/jna]]
-                                    [net.java.dev.jna/jna-platform "5.6.0"]
+                                    [net.java.dev.jna/jna-platform "5.7.0"]
                                     [com.ongres.scram/client "2.1"]]}
 
 
