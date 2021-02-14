@@ -25,6 +25,7 @@
                  [org.postgresql/postgresql "42.2.18"]
                  [migratus "1.3.4" :exclusions [org.clojure/clojure]]
                  [seancorfield/next.jdbc "1.1.613"]
+                 [camel-snake-kebab/camel-snake-kebab "0.4.1"]
                  [borkdude/sci "0.2.3"]
                  [borkdude/babashka "0.2.6"]
                  [com.taoensso/tower "3.1.0-beta4"]
