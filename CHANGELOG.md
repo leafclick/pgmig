@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
 ## [Unreleased]
+### Added
+- More complete support for next.jdbc
+- Improved json and jsonb support by including PGObject jdbc extension
+
+### Changes
+- Updated to GraalVM 21.0.2.
+- Updated Clojure and dependencies
+- Docker image is based on the new graalvm/graalvm-ce base
 
 ## [0.5.0] - 2020-11-09
 ### Added
