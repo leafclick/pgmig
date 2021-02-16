@@ -4,6 +4,9 @@ This change log follows the conventions of [keepachangelog.com](http://keepachan
 
 ## [Unreleased]
 ### Added
+
+## [0.6.0] - 2021-02-16
+### Added
 - More complete support for next.jdbc
 - Improved json and jsonb support by including PGObject jdbc extension
 
