@@ -253,7 +253,7 @@
    'next.jdbc.date-time   ndate-time-namespace
    'next.jdbc.optional    noptional-namespace
    'next.jdbc.plan        nplan-namespace
-   'next.jdbcp.prepare    nprepare-namespace
+   'next.jdbc.prepare     nprepare-namespace
    'next.jdbc.protocols   nprotocols-namespace
    'next.jdbc.quoted      nquoted-namespace
    'next.jdbc.result-set  nresult-set-namespace
