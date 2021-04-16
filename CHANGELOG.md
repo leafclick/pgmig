@@ -2,8 +2,14 @@
 All notable changes to this project will be documented in this file.
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 
-## [Unreleased]
+## [0.6.0] - 2021-04-16
 ### Added
+- Allow more reflective calls in clj migrations
+
+### Changes
+- Update logging to Timbre 5
+- Updated major dependencies including Clojure and Sci
+- Fixed exported symbols of next.jdbc.prepare
 
 ## [0.6.0] - 2021-02-16
 ### Added
