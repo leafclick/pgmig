@@ -9,11 +9,11 @@
             :distribution :repo}
 
   :dependencies [[org.clojure/clojure "1.10.3"]
-                 [com.taoensso/timbre "4.10.0"]
                  [hikari-cp "1.8.3" :exclusions [com.zaxxer/HikariCP org.slf4j/slf4j-api]]
                  [mount "0.1.16"]
                  [environ/environ "1.2.0"]
-                 [com.fzakaria/slf4j-timbre "0.3.20" :exclusions [org.clojure/clojure]]
+                 [com.taoensso/timbre "5.1.2"]
+                 [com.fzakaria/slf4j-timbre "0.3.21" :exclusions [org.clojure/clojure]]
                  [org.slf4j/slf4j-api "1.7.30"]
                  [org.slf4j/log4j-over-slf4j "1.7.30"]
                  [org.slf4j/jul-to-slf4j "1.7.30"]
@@ -29,7 +29,7 @@
                  [borkdude/sci "0.2.4"]
                  [babashka/babashka "0.3.5"]
                  [com.taoensso/tower "3.1.0-beta4"]
-                 [com.taoensso/encore "2.122.0"]
+                 [com.taoensso/encore "3.19.0"]
                  [trptcolin/versioneer "0.2.0"]]
 
   :min-lein-version "2.0.0"

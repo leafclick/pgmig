@@ -4,8 +4,9 @@
   (:import (java.nio.file Path Paths Files LinkOption)))
 
 (defstate env :start (let [config (args)
-                           logging-options (select-keys config [:level :output-fn :timestamp-opts])]
-                       (logging/configure-logging (merge {:level :warn} logging-options))
+                           logging-options (-> (select-keys config [:output-fn :timestamp-opts])
+                                               (assoc :min-level (:level config :warn)))]
+                       (logging/configure-logging logging-options)
                        config))
 
 (def ^:const DEFAULT-MIGRATION-DIR "resources/migrations")
