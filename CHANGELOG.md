@@ -1,8 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
+## [UNRELEASED] 
+- Added windows cmd script to create the x64 native binary (exe)
 
-## [0.6.0] - 2021-04-16
+## [0.7.0] - 2021-04-16
 ### Added
 - Allow more reflective calls in clj migrations
 
