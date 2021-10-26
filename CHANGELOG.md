@@ -2,7 +2,11 @@
 All notable changes to this project will be documented in this file.
 This change log follows the conventions of [keepachangelog.com](http://keepachangelog.com/).
 ## [UNRELEASED] 
+
+## [0.7.1] - 2021-10-26
 - Added windows cmd script to create the x64 native binary (exe)
+- Update to GraalVM 21.1
+- Fix DNS resolution issues in pre-built docker image
 
 ## [0.7.0] - 2021-04-16
 ### Added
