@@ -3,6 +3,7 @@
 /checkouts
 pom.xml
 pom.xml.asc
+pgmig.build_artifacts.txt
 *.jar
 *.iml
 *.class
@@ -19,3 +20,4 @@ pom.xml.asc
 .~lock.*
 *.sw[op]
 /pgmig
+/reports
