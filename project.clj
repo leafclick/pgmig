@@ -26,7 +26,7 @@
                  [migratus "1.3.5" :exclusions [org.clojure/clojure]]
                  [seancorfield/next.jdbc "1.1.646"]
                  [camel-snake-kebab/camel-snake-kebab "0.4.2"]
-                 [borkdude/sci "0.2.4"]
+                 [org.babashka/sci "0.3.2"]
                  [babashka/babashka "0.3.5"]
                  [com.taoensso/tower "3.1.0-beta4"]
                  [com.taoensso/encore "3.19.0"]
