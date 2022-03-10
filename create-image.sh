@@ -2,7 +2,7 @@
 
 uberjar="$1"
 
-native-image --verbose \
+exec native-image --verbose \
     --no-server \
     -Djava.library.path=$GRAAL_HOME/jre/lib/amd64/ \
     -H:+ReportExceptionStackTraces \
@@ -22,4 +22,5 @@ native-image --verbose \
     --initialize-at-run-time=com.sun.jna.platform.win32.Secur32 \
     --initialize-at-run-time=com.sun.jna.platform.win32.Kernel32 \
     --initialize-at-run-time=org.postgresql.sspi.SSPIClient \
-    -jar "$uberjar"
+    -jar "$uberjar" \
+    pgmig

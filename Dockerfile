@@ -1,6 +1,6 @@
-FROM ghcr.io/graalvm/graalvm-ce:21.2.0 as BASE
+FROM ghcr.io/graalvm/graalvm-ce:21.3.1 as BASE
 
-ENV GRAAL_HOME=/opt/graalvm-ce-java11-21.2.0
+ENV GRAAL_HOME=/opt/graalvm-ce-java11-21.3.1
 
 RUN gu install native-image
 RUN update-alternatives --install /usr/bin/native-image native-image $GRAAL_HOME/bin/native-image 1
