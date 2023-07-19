@@ -45,6 +45,9 @@
    ["-d" "--dbname PGDATABASE" "Database Name"
     :default-fn (fn [_]
                   (env-str :pgdatabase))]
+   ["-t" "--table TABLE_NAME" "Migration Table Name"
+    :default-fn (fn [_]
+                  (env-str :migtable))]
    ["-U" "--username PGUSER" "Database User"
     :default-fn (fn [_]
                   (env-str :pguser))]

@@ -9,17 +9,25 @@
 (defn migration-config
   [options]
   (let [migration-dir (:resource-dir config/env)
-        classpath (:classpath options)]
+        classpath (:classpath options)
+        table (:table options)]
     (log/info (str "Using migration dir '" migration-dir "'"))
+    (log/info (str "Using migration table '" table "'"))
     (log/info (str "Using migration classpath '" classpath "'"))
     (cond->
       {:store         :database
        :migration-dir migration-dir
        :db            db-spec}
-      classpath (assoc :classpath classpath))))
+      classpath (assoc :classpath classpath)
+      table (assoc :migration-table-name table))))
 
 (defn migrate [options]
-  (migratus/migrate (migration-config options)))
+  (let [config (migration-config options)]
+    (println "About to perform migration")
+    (case (migratus/migrate config)
+      :ignored (log/error "Table is reserved")
+      :failure (log/error "Migration failed")
+      nil (println "Success"))))
 
 (defn init [options]
   (migratus/init (migration-config options)))
