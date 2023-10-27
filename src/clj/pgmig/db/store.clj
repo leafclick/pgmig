@@ -27,7 +27,9 @@
             jdbc-url (conj [:jdbc-url jdbc-url]))))
 
 (defstate db-spec
-  :start (let [dbpool (hikari/make-datasource (datasource-options config/env))]
+  :start (let [opt (datasource-options config/env)
+               dbpool (try (hikari/make-datasource opt)
+                           (catch Exception e (prn e) (throw e)))]
            {:datasource dbpool})
   :stop (when-let [ds (:datasource db-spec)]
           (hikari/close-datasource ds)))

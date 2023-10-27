@@ -1,3 +1,14 @@
+## ELiT
+
+Here at ELiT, we use this as part of elit-cli-2.
+
+To build:
+
+    lein with-profile native do clean, test, uberjar && cp target/uberjar/pgmig.jar ../elit-cli-2/lib
+
+## Documentation below here is from the original project:
+---
+
 # PGMig
 
 Standalone PostgreSQL Migration Runner using [Migratus](https://github.com/yogthos/migratus) runnable as a native-image binary.
@@ -88,11 +99,11 @@ Note that if you use clj programmatic migrations (using [sci](https://github.com
 all directories that contain migration support code files (if there are any). You can usually create a classpath
 list by running `lein classpath` or `clj -Spath` in the project.
 
-## Run uberjar with java 
+## Run uberjar with java
 
 To try out the basic functionality you can run the uberjar itself. To get help and available commands run
 
-    java -jar target/uberjar/pgmig.jar 
+    java -jar target/uberjar/pgmig.jar
 
 To list pending migrations (uberjar)
 
@@ -113,7 +124,7 @@ To run the native image within the docker container set the environment, bind th
                -e RESOURCE_DIR=migrations \
                -e CLASSPATH=clj \
                leafclick/pgmig migrate
-               
+
 For now the expected output is something like this
 
     20180830154000 first
@@ -130,7 +141,7 @@ and they all apply to PGMig.
 Because of this the only supported(*) JDBC driver is PostgreSQL JDBC DataSource which is bundled with PGMig binary.
 
 (*) *not all features are supported but the basics work well*
-               
+
 # License
 
 Copyright © 2019-2021 leafclick s.r.o.

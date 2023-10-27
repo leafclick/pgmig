@@ -8,10 +8,12 @@ pgmig.build_artifacts.txt
 *.iml
 *.class
 /.lein-*
+/.clj-kondo
 /.nrepl-port
 .hgignore
 .hg/
 /.idea
+/.lsp
 /log
 /.data
 /.cdata

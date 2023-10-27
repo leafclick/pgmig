@@ -19,7 +19,13 @@
       classpath (assoc :classpath classpath))))
 
 (defn migrate [options]
-  (migratus/migrate (migration-config options)))
+  (let [config (migration-config options)]
+    (println "About to perform migrations")
+    (case (migratus/migrate config)
+      :ignore (log/error "Table is reserved")
+      :failure (log/error "Migrations failed")
+      nil (println "Success")
+      (log/error "Unknown return code from migratus.core/migrate"))))
 
 (defn init [options]
   (migratus/init (migration-config options)))
